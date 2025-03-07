@@ -31,3 +31,5 @@ app.use("/api/v1/application", applicationtRoute);
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Backend is up and running!" });
 });
+
+export default app;
