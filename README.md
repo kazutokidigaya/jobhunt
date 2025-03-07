@@ -1,30 +1,31 @@
-# Dice Roll – Simple Provably Fair Dice Game
+# JobHunt – A Full-Stack Job Board with Resume Parsing
 
-Welcome to **Dice Roll** – a provably fair dice game built with React for the frontend and Node.js/Express for the backend. In this game, you can place a bet, roll the dice, and win credits if the outcome is favorable. The backend uses provably fair hashing (SHA-256) to ensure transparency, and the frontend includes bonus Web3 integration to simulate a crypto wallet balance. Your balance is stored on localStorage.
+Welcome to **Job Huntl** , a full‑stack HR job board built with the MERN stack. In JobHunt, recruiters can post jobs while candidates can browse listings and apply by uploading their resumes. When a candidate applies, the resume is parsed using a third‑party AI API (e.g. Groq API) to extract key details—such as skills and total years of experience—which are then displayed on the recruiter’s dashboard for quick evaluation.
 
-[Live Demo](https://dice-roll-p7dn.vercel.app/)
+[Live Demo](https://jobs-horizon.vercel.app)
 
 ## Features
 
-- **Provably Fair Gameplay:**
-  - Enter your bet amount and roll the dice to get a random number between 1 and 6.
-  - If the roll is 4, 5, or 6, you win (receive a 2x payout, meaning your net gain is 2x your bet).
-  - If the roll is 1, 2, or 3, your bet is deducted from your balance.
-- **Backend Integration:**
+- **Job Posting & Management:**
 
-  - Node.js/Express backend with a `POST /roll-dice` endpoint.
-  - Implements provably fair hashing using SHA-256 for transparency.
-  - Updates and returns the new player balance based on the bet and dice outcome.
+  - Recruiters can create, update, and delete job postings.
+  - Job listings include details such as title, description, salary, location, job type, and required experience level.
 
-- **Modern User Interface:**
+- **Candidate Application:**
 
-  - Clean, dark-themed UI built with React.
-  - Animated 3D dice roll effect.
-  - Real-time display of current balance (starting with 1000 credits).
+  - Candidates can browse job listings and apply.
+  - Each candidate’s profile contains their resume (uploaded once) and other personal details.
+  - When applying, the resume data (including a parsed version) is automatically attached to the application.
 
-- **Web3 Integration (Bonus):**
-  - Simulates a crypto wallet balance using Web3.js/Ethers.js.
-  - Stores player balance in localStorage.
+- **Resume Parsing & Extraction:**
+
+  - Resumes are uploaded and processed using pdf‑parse (debugging‑disabled) to extract raw text.
+  - The parsed text is sent to the Groq API with a custom prompt to extract key details (e.g. total years of experience and skills) in JSON format.
+  - Extracted data is stored and later displayed on the recruiter’s dashboard for fast, structured candidate evaluation.
+
+- **Recruiter Dashboard:**
+  - View and manage job postings and candidate applications.
+  - For each candidate application, view basic details along with a hover‑card (“@info”) that shows the extracted resume information (total experience and skills).
 
 ## Installation & Setup
 
@@ -33,43 +34,61 @@ Welcome to **Dice Roll** – a provably fair dice game built with React for the 
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/kazutokidigaya/dice-roll.git
-cd dice-roll
+git clone https://github.com/kazutokidigaya/jobhunt.git
+cd jobhunt
 ```
 
-#### 1.1. Install frontend Dependencies
+### 2. Environment Variables
 
-Install the required packages:
+Create a .env file in the root of the backend directory and add the following (replace values as needed):
 
 ```bash
+PORT=5000
+MONGODB_URI="YOUR_MONGO_URL"
+CLOUDINARY_CLOUD_NAME="YOUR_CLOUDINARY_CLOUD_NAME"
+CLOUDINARY_API_KEY="YOUR_CLOUDINARY_API_KEY"
+CLOUDINARY_API_SECRET="YOUR_CLOUDINARY_API_SECRET"
+SECRET_KEY="YOUR_SECRET_KEY"
+GROQ_API_KEY="YOUR_GROQ_API_KEY"
+ORIGIN_URL=http://localhost:5173
+
+```
+
+Note: In your Vite frontend, remember to prefix environment variables with VITE\_. For example:
+
+```bash
+VITE_BASE_API=http://localhost:5000
+```
+
+### 3. Install Dependencies
+
+For the Frontend
+Navigate to the frontend folder (if separated) and install dependencies:
+
+```bash
+cd frontend
 npm install
 ```
 
-#### 1.2. Start the frontend
+For the Backend
+Navigate to the backend folder and install dependencies:
 
-Run the development server:
+```bash
+cd backend
+npm install
+```
+
+### 4. Start the Development Servers
+
+Frontend
+Run the Vite development server:
 
 ```bash
 npm run dev
 ```
 
-### 2. Open A new terminal for backend
-
-```bash
-cd dice-roll/backend
-```
-
-#### 2.1. Install backend Dependencies
-
-Install the required packages:
-
-```bash
-npm install
-```
-
-#### 2.2. Start the backend
-
-Run the development server:
+Backend
+Run the backend server:
 
 ```bash
 npm run start
