@@ -11,7 +11,7 @@ import applicationtRoute from "./routes/application.routes.js";
 dotenv.config();
 
 const app = express();
-
+connectDb();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +28,6 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationtRoute);
 
-app.listen(PORT, () => {
-  console.log(`server is running on PORT: http://localhost:${PORT}`);
-  connectDb();
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Backend is up and running!" });
 });
