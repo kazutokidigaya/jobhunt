@@ -12,7 +12,12 @@ dotenv.config();
 
 const app = express();
 connectDb();
-app.use(cors());
+app.use(
+  cors({
+    origin: `${process.env.ORIGIN_URL}`,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
